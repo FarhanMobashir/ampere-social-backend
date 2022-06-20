@@ -1,0 +1,19 @@
+{
+  "name": "ampere-social-backend",
+  "version": "1.0.0",
+  "description": "this is the backend for the social media app",
+  "main": "index.js",
+  "repository": "https://github.com/FarhanMobashir/ampere-social-backend.git",
+  "author": "Mobashir Farhan <farhanmobashir007@gmail.com>",
+  "license": "MIT",
+  "type": "module",
+  "scripts": {
+    "start": "nodemon index.js"
+  },
+  "dependencies": {
+    "express": "^4.18.1"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.16"
+  }
+}
