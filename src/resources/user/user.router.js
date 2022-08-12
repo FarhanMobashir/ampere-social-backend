@@ -11,7 +11,7 @@ import {
 } from "./user.controller.js";
 
 const userRouter = Router();
-
+// single user
 // acive user
 userRouter.get("/me", me);
 userRouter.get("/all", getAllUsers);
@@ -20,6 +20,6 @@ userRouter.put("/follow/:id", followUser);
 userRouter.put("/unfollow/:id", unfollowUser);
 userRouter.get("/followings", getAllFollowing);
 userRouter.get("/followers", getAllFollowers);
-userRouter.get("/:id", getSingleUser);
+userRouter.get("/single/:id", getSingleUser);
 
 export default userRouter;

@@ -40,7 +40,10 @@ const userSchema = new mongoose.Schema(
       default: "Technology",
     },
     avatar: {
-      type: String,
+      type: {
+        url: String,
+        public_id: String,
+      },
     },
     bio: {
       type: String,

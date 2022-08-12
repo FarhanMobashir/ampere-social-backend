@@ -7,6 +7,7 @@ import { protect, signin, signup } from "./auth.js";
 import userRouter from "./resources/user/user.router.js";
 import boardRouter from "./resources/boards/board.router.js";
 import pinRouter from "./resources/pin/pin.router.js";
+import commentRouter from "./resources/comment/comment.router.js";
 
 const app = express();
 dotenv.config();
@@ -32,6 +33,8 @@ app.use("/api/user", userRouter);
 app.use("/api/boards", boardRouter);
 // pin
 app.use("/api/pins", pinRouter);
+// comment
+app.use("/api/comments", commentRouter);
 
 mongoose.connect(process.env.MONGO_URI).then((data) => {
   console.log("mongo connected");

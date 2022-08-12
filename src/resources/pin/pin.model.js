@@ -9,7 +9,10 @@ const pinSchema = new mongoose.Schema({
     type: String,
   },
   image: {
-    type: String,
+    type: {
+      url: String,
+      public_id: String,
+    },
   },
   tags: [
     {

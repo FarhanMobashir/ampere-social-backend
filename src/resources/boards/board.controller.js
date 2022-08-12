@@ -1,9 +1,22 @@
+import { Pin } from "../pin/pin.model.js";
 import { Board } from "./board.model.js";
 
 export const getOneBoard = (model) => async (req, res) => {
   try {
-    const board = await model.findById(req.params.id).populate("pins");
-    res.send({ data: board });
+    const board = await model.findById(req.params.id).lean();
+
+    const allPins = await Pin.find({ _id: { $in: board.pins } }).populate(
+      "createdBy"
+    );
+
+    console.log(allPins);
+
+    res.send({
+      data: {
+        ...board,
+        pins: allPins,
+      },
+    });
   } catch (e) {
     res.status(400).send({ error: "Error getting board" });
   }
@@ -29,6 +42,7 @@ export const createOneBoard = (model) => async (req, res) => {
   }
 };
 export const updateOneBoard = (model) => async (req, res) => {
+  console.log(req.body);
   try {
     const updatedDoc = await model
       .findOneAndUpdate(
