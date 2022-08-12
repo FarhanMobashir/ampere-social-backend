@@ -22,7 +22,7 @@ export const signup = async (req, res) => {
   } else {
     try {
       const user = await User.create(req.body);
-      const token = newToken(user);
+      const token = await newToken(user);
       return res.status(201).send({ token, user, mode: "signup" });
     } catch (e) {
       return res.status(401).send({ error: "User already exist" });
