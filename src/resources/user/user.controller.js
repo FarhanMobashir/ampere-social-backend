@@ -36,9 +36,18 @@ export const updateMe = async (req, res) => {
       console.log(fields);
 
       if (!files.avatar) {
-        body = {
-          ...fields,
-        };
+        let body = {};
+        if (fields.interests) {
+          body = {
+            interests: fields.interests.split(","),
+          };
+        } else {
+          body = {
+            ...fields,
+          };
+        }
+
+        console.log(body);
         const user = await User.findByIdAndUpdate(req.user._id, body, {
           new: true,
         })
@@ -96,7 +105,7 @@ export const updateMe = async (req, res) => {
     });
   } catch (e) {
     console.error(e);
-    res.status(400).send({ error: "Error creating pin" }).end();
+    res.status(400).send({ error: "Error Updating user" }).end();
   }
 };
 
