@@ -33,13 +33,12 @@ export const updateMe = async (req, res) => {
       file.filepath = form.uploadDir + "/" + file.originalFilename;
     });
     form.parse(req, async (err, fields, files) => {
-      console.log(files);
+      console.log(fields);
 
       if (!files.avatar) {
         body = {
           ...fields,
         };
-        console.log(body);
         const user = await User.findByIdAndUpdate(req.user._id, body, {
           new: true,
         })
