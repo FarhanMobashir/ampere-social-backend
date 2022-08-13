@@ -168,7 +168,7 @@ const deletePin = (model) => async (req, res) => {
       api_key: process.env.CLOUDINARY_API_KEY,
       api_secret: process.env.CLOUDINARY_API_SECRET,
     });
-    const res = await cloudinary.v2.uploader.destroy(pin.image.public_id);
+    await cloudinary.v2.uploader.destroy(pin.image.public_id);
     // remove pin refrence from all boards
     const boards = await Board.find({});
     boards.forEach((board) => {
