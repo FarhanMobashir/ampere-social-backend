@@ -12,7 +12,13 @@ import commentRouter from "./resources/comment/comment.router.js";
 const app = express();
 dotenv.config();
 app.disable("x-powered-by");
-app.use(cors());
+
+app.use(
+  cors({
+    origin: "*",
+    optionsSuccessStatus: 200,
+  })
+);
 app.use(json());
 app.use(urlencoded({ extended: true }));
 app.use(morgan("dev"));
