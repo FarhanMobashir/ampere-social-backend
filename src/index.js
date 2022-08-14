@@ -1,5 +1,5 @@
 import express, { json, urlencoded } from "express";
-import dotenv from "dotenv/config";
+import dotenv from "dotenv";
 import cors from "cors";
 import morgan from "morgan";
 import mongoose from "mongoose";
@@ -12,13 +12,8 @@ import commentRouter from "./resources/comment/comment.router.js";
 const app = express();
 // dotenv.config();
 app.disable("x-powered-by");
-
-app.use(
-  cors({
-    origin: "*",
-    optionsSuccessStatus: 200,
-  })
-);
+dotenv.config();
+app.use(cors());
 app.use(json());
 app.use(urlencoded({ extended: true }));
 app.use(morgan("dev"));
