@@ -1,5 +1,5 @@
 import express, { json, urlencoded } from "express";
-import dotenv from "dotenv";
+import "dotenv/config";
 import cors from "cors";
 import morgan from "morgan";
 import mongoose from "mongoose";
@@ -10,17 +10,8 @@ import pinRouter from "./resources/pin/pin.router.js";
 import commentRouter from "./resources/comment/comment.router.js";
 
 const app = express();
-// dotenv.config();
 app.disable("x-powered-by");
-dotenv.config();
-app.use(
-  cors({
-    orgin: "https://teal-buttercream-cd9935.netlify.app/",
-    methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
-    credentials: true,
-    optionsSuccessStatus: 200,
-  })
-);
+app.use(cors());
 app.use(json());
 app.use(urlencoded({ extended: true }));
 app.use(morgan("dev"));
