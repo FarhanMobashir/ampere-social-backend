@@ -28,10 +28,10 @@ export const updateMe = async (req, res) => {
     const form = new formidable.IncomingForm();
     form.multiples = true;
     form.keepExtensions = true;
-    form.uploadDir = process.cwd() + "/src/uploads";
-    form.on("fileBegin", (name, file) => {
-      file.filepath = form.uploadDir + "/" + file.originalFilename;
-    });
+    // form.uploadDir = process.cwd() + "/src/uploads";
+    // form.on("fileBegin", (name, file) => {
+    //   file.filepath = form.uploadDir + "/" + file.originalFilename;
+    // });
     form.parse(req, async (err, fields, files) => {
       console.log(fields);
 
@@ -57,12 +57,12 @@ export const updateMe = async (req, res) => {
         res.send({ data: user });
       }
       if (files.avatar) {
-        files.avatar.filepath =
-          process.cwd() + "/src/uploads/" + files.avatar.originalFilename;
-        fs.rename(
-          files.avatar.filepath,
-          process.cwd() + "/src/uploads/" + files.avatar.originalFilename
-        );
+        // files.avatar.filepath =
+        //   process.cwd() + "/src/uploads/" + files.avatar.originalFilename;
+        // fs.rename(
+        //   files.avatar.filepath,
+        //   process.cwd() + "/src/uploads/" + files.avatar.originalFilename
+        // );
         if (req.user.avatar) {
           cloudinary.v2.config({
             cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
@@ -96,9 +96,9 @@ export const updateMe = async (req, res) => {
           .lean()
           .exec();
 
-        fs.unlink(
-          process.cwd() + "/src/uploads/" + files.avatar.originalFilename
-        );
+        // fs.unlink(
+        //   process.cwd() + "/src/uploads/" + files.avatar.originalFilename
+        // );
 
         res.send({ data: user });
       }
