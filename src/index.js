@@ -13,7 +13,14 @@ const app = express();
 // dotenv.config();
 app.disable("x-powered-by");
 dotenv.config();
-app.use(cors());
+app.use(
+  cors({
+    orgin: "https://teal-buttercream-cd9935.netlify.app/",
+    methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
+    credentials: true,
+    optionsSuccessStatus: 200,
+  })
+);
 app.use(json());
 app.use(urlencoded({ extended: true }));
 app.use(morgan("dev"));
