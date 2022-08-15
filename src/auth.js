@@ -39,7 +39,7 @@ export const signin = async (req, res) => {
 
   try {
     const user = await User.findOne({ email: req.body.email })
-      // .select("-password")
+      .select("-password")
       .exec();
     if (!user) {
       return res.status(401).send(invalid);

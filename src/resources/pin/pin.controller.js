@@ -63,45 +63,39 @@ const createPin = (model) => async (req, res) => {
     const form = new formidable.IncomingForm();
     form.multiples = true;
     form.keepExtensions = true;
-    // form.uploadDir = process.cwd() + "/src/uploads";
-    // form.on("fileBegin", (name, file) => {
-    //   file.filepath = form.uploadDir + "/" + file.originalFilename;
-    // });
+
     form.parse(req, async (err, fields, files) => {
       console.log(files);
-      // files.image.filepath =
-      //   process.cwd() + "/src/uploads/" + files.image.originalFilename;
-      // fs.rename(
-      //   files.image.filepath,
-      //   process.cwd() + "/src/uploads/" + files.image.originalFilename
-      // );
+
       if (files.image) {
+        const url = await uploadImageToCloudinary(files.image.filepath)
+          .then((result) => {
+            return result.secure_url;
+          })
+          .catch((e) => {
+            console.error(e);
+          });
+
+        const public_id = await uploadImageToCloudinary(files.image.filepath)
+          .then((result) => {
+            return result.public_id;
+          })
+          .catch((e) => {
+            console.error(e);
+          });
+
         body = {
           ...fields,
           image: {
-            url: await uploadImageToCloudinary(files.image.filepath)
-              .then((result) => {
-                return result.secure_url;
-              })
-              .catch((e) => {
-                console.error(e);
-              }),
-            public_id: await uploadImageToCloudinary(files.image.filepath)
-              .then((result) => {
-                return result.public_id;
-              })
-              .catch((e) => {
-                console.error(e);
-              }),
+            url: url,
+            public_id: public_id,
           },
         };
         const pin = await model.create({
           ...body,
           createdBy: req.user._id,
         });
-        // fs.unlink(
-        //   process.cwd() + "/src/uploads/" + files.image.originalFilename
-        // );
+
         const boardToAddPin = await Board.findOne({
           _id: body.boardId,
           createdBy: req.user._id,
