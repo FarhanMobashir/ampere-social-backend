@@ -22,8 +22,13 @@ export const signup = async (req, res) => {
   } else {
     try {
       const user = await User.create(req.body);
+      const userWithoutPassword = await User.findOne({ _id: user._id }).select(
+        "-password"
+      );
       const token = newToken(user);
-      return res.status(201).send({ token, user, mode: "signup" });
+      return res
+        .status(201)
+        .send({ token, userWithoutPassword, mode: "signup" });
     } catch (e) {
       return res.status(401).send({ error: "User already exist" });
     }
