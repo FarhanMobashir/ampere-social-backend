@@ -113,7 +113,7 @@ export const getAllUsers = async (req, res) => {
   try {
     const users = await User.find({
       _id: { $ne: req.user._id },
-    });
+    }).select("-password -__v");
     res.send({ data: users });
   } catch (e) {
     res.status(400).send({ error: "Error getting users" });
@@ -122,7 +122,7 @@ export const getAllUsers = async (req, res) => {
 
 export const getSingleUser = async (req, res) => {
   try {
-    const user = await User.findById(req.params.id);
+    const user = await User.findById(req.params.id).select("-password -__v");
     res.send({ data: user });
   } catch (e) {
     res.status(400).send({ error: "Error getting user" });
