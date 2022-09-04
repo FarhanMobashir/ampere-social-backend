@@ -43,9 +43,7 @@ export const signin = async (req, res) => {
   const invalid = { error: "Invalid email and password combination" };
 
   try {
-    const user = await User.findOne({ email: req.body.email })
-      .select("-password")
-      .exec();
+    const user = await User.findOne({ email: req.body.email }).exec();
     if (!user) {
       return res.status(401).send(invalid);
     }
@@ -57,7 +55,12 @@ export const signin = async (req, res) => {
     }
 
     const token = newToken(user);
-    return res.status(201).send({ token, user, mode: "signin" });
+    const userWithoutPassword = await User.findOne({
+      email: req.body.email,
+    }).select("-password");
+    return res
+      .status(201)
+      .send({ token, user: userWithoutPassword, mode: "signin" });
   } catch (e) {
     console.error(e);
     res.status(500).send({
