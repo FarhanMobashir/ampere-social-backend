@@ -60,7 +60,10 @@ export const signin = async (req, res) => {
     return res.status(201).send({ token, user, mode: "signin" });
   } catch (e) {
     console.error(e);
-    res.status(500).end();
+    res.status(500).send({
+      e,
+    }),
+      end();
   }
 };
 
