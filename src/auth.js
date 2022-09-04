@@ -61,7 +61,7 @@ export const signin = async (req, res) => {
   } catch (e) {
     console.error(e);
     res.status(500).send({
-      e,
+      error: e,
     }),
       end();
   }
